@@ -5,7 +5,7 @@ public class Peg : MonoBehaviour
 {
     public PegColour Colour;
     private SpriteRenderer spriteRenderer;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public float pathProgress = 0f;
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -30,11 +30,12 @@ public class Peg : MonoBehaviour
                 spriteRenderer.color = Color.orange;
                 break;
         }
+        ChainManager.Instance.RegisterPeg(this);
     }
 
     public void TakeHit()
     {
-        //ChainManagerGoesHere
+        ChainManager.Instance.RemovePeg(this);
         //ScoreGoesHere
         Destroy(gameObject);
     }

@@ -26,6 +26,9 @@ public class Launcher : MonoBehaviour
     void fire()
     {
         GameObject ball = Instantiate(ballPrefab, transform.position, transform.rotation);
+        PegColour nextColour = BallManager.Instance.GetNextBallColour();
+        BallController ballController = ball.GetComponent<BallController>();
+        ballController.SetColour(nextColour);
         Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
         Vector2 direction = (mainCamera.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
         rb.AddForce(direction * launchForce, ForceMode2D.Impulse);

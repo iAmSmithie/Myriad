@@ -13,18 +13,13 @@ public class BallController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
-    {
-        
-    }
-
     void OnCollisionEnter2D(Collision2D collision)
     {
         Peg hitPeg = collision.gameObject.GetComponent<Peg>();
 
         if (hitPeg == null)
         {
-            return; //no peg was hit, exit the function
+            return;
         }
         bounceCount++;
 
@@ -34,11 +29,26 @@ public class BallController : MonoBehaviour
         {
             SlotIn();
         }
-        if (isDetonateMode && hitPeg.Colour == ballColour)
+        if (BallManager.Instance.isDetonateMode && hitPeg.Colour == ballColour)
         {
             Detonate();
         }
 
+    }
+
+    public void SetColour(PegColour colour)
+    {
+        ballColour = colour;
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        switch (colour)
+        {
+            case PegColour.Red: sr.color = Color.red; break;
+            case PegColour.Blue: sr.color = Color.blue; break;
+            case PegColour.Green: sr.color = Color.green; break;
+            case PegColour.Yellow: sr.color = Color.yellow; break;
+            case PegColour.Purple: sr.color = Color.purple; break;
+            case PegColour.Orange: sr.color = Color.orange; break;
+        }
     }
     void Detonate()
     {
@@ -50,8 +60,7 @@ public class BallController : MonoBehaviour
             Peg peg = collider.GetComponent<Peg>();
             if (peg != null && peg.Colour == ballColour)
             {
-                Destroy(peg.gameObject);
-                //peg.TakeHit();
+                peg.TakeHit();
             }
         }
         Destroy(gameObject);
@@ -59,6 +68,11 @@ public class BallController : MonoBehaviour
     void SlotIn()
     {
         Debug.Log($"SlotIn called. Final bounce count: {bounceCount}");
-        rb.simulated = false;
+        rb.bodyType = RigidbodyType2D.Static;
+
+        Peg newPeg = gameObject.AddComponent<Peg>();
+        newPeg.Colour = ballColour;
+        Destroy(this);
+        ChainManager.Instance.RegisterPeg(newPeg);
     }
 }
