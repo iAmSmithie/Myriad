@@ -30,7 +30,7 @@ public class BallManager : MonoBehaviour
     {
         isDetonateMode = !isDetonateMode;
     }
-    private PegColour GetRandomColour()
+    public static PegColour GetRandomColour()
     {
         Array colours = Enum.GetValues(typeof(PegColour));
         return (PegColour)colours.GetValue(UnityEngine.Random.Range(0, colours.Length));

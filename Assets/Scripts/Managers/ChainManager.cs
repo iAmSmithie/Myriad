@@ -8,6 +8,14 @@ public class ChainManager : MonoBehaviour
     private List<Peg> activeChain = new List<Peg>();
     public SplineContainer splineContainer;
     public float chainSpeed = 0.1f;
+    public float spacingBetweenPegs = 0.05f;
+    public float spawnRate = 1f;
+    public int totalPegsToSpawn = 10;
+    public GameObject pegPrefab;
+
+    [SerializeField] private float leadProgress;
+    [SerializeField] private float spawnedPegs;
+    private float spawnTimer;
 
     void Awake()
     {
@@ -25,35 +33,61 @@ public class ChainManager : MonoBehaviour
     {
         return activeChain.Count;
     }
-    void Start()
+    void SpawnNextPeg()
     {
-        
+        //Debug.Log("SpawnNextPeg called!");
+        int newIndex = activeChain.Count;
+        float spawnProgress = leadProgress - (newIndex * spacingBetweenPegs);
+        Vector3 spawnPosition = splineContainer.EvaluatePosition(Mathf.Clamp01(spawnProgress));
+        GameObject peg = Instantiate(pegPrefab, spawnPosition, Quaternion.identity);
+        Peg pegComponent = peg.GetComponent<Peg>();
+        PegColour nextColour = BallManager.GetRandomColour();
+        pegComponent.SetColour(nextColour);
+        RegisterPeg(pegComponent);
+        spawnedPegs++;
     }
 
     void Update()
     {
-        for (int i = activeChain.Count - 1; i >= 0; i--)
+        //Debug.Log($"Update running. spawnedPegs: {spawnedPegs}, totalPegsToSpawn: {totalPegsToSpawn}");
+        if (activeChain.Count > 0)
         {
-            Peg peg = activeChain[i];
+            leadProgress += chainSpeed * Time.deltaTime;
+        }
 
-            if (peg == null)
+        for (int i = 0; i < activeChain.Count; i++)
+        {
+            float pegProgress = leadProgress - (i * spacingBetweenPegs);
+
+            if (pegProgress <= 0f)
             {
-                activeChain.RemoveAt(i);
-                continue;
+                break;
             }
 
-            peg.pathProgress += chainSpeed * Time.deltaTime;
+            Vector3 newPosition = splineContainer.EvaluatePosition(pegProgress);
+            activeChain[i].transform.position = newPosition;
 
-            if (peg.pathProgress > 1f)
+            if (pegProgress >= 1f)
             {
-                GameManager.Instance.OnPegReachedExit(peg);
+                Peg pegToRemove = activeChain[i];
+                GameManager.Instance.OnPegReachedExit(pegToRemove);
                 activeChain.RemoveAt(i);
-                Destroy(peg.gameObject);
+                Destroy(pegToRemove.gameObject);
+                leadProgress -= spacingBetweenPegs;
+                i--;
                 continue;
             }
+        }
 
-            Vector3 newPosition = splineContainer.EvaluatePosition(peg.pathProgress);
-            peg.transform.position = newPosition;
+        if (spawnedPegs < totalPegsToSpawn)
+        {
+            Debug.Log($"Spawner active. Timer: {spawnTimer}, Rate: {spawnRate}, Spawned: {spawnedPegs}");
+            spawnTimer += Time.deltaTime;
+            if (spawnTimer >= spawnRate)
+            {
+                SpawnNextPeg();
+                spawnTimer = 0f;
+            }
         }
     }
 }

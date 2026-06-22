@@ -5,9 +5,14 @@ public class Peg : MonoBehaviour
 {
     public PegColour Colour;
     private SpriteRenderer spriteRenderer;
-    public float pathProgress = 0f;
+
     void Start()
     {
+        SetColour(Colour);
+    }
+    public void SetColour(PegColour colour)
+    {
+        Colour = colour;
         spriteRenderer = GetComponent<SpriteRenderer>();
         switch (Colour)
         {
@@ -30,7 +35,6 @@ public class Peg : MonoBehaviour
                 spriteRenderer.color = Color.orange;
                 break;
         }
-        ChainManager.Instance.RegisterPeg(this);
     }
 
     public void TakeHit()
