@@ -11,6 +11,6 @@ public class GameManager : MonoBehaviour
 
     public void OnPegReachedExit(Peg peg)
     {
-        Debug.Log($"Peg of colour {peg.Colour} reached the exit!");
+        //Debug.Log($"Peg of colour {peg.Colour} reached the exit!");
     }
 }

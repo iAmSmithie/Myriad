@@ -27,7 +27,16 @@ public class ChainManager : MonoBehaviour
     }
     public void RemovePeg(Peg peg)
     {
-        activeChain.Remove(peg);
+        //activeChain.Remove(peg);
+        int index = activeChain.IndexOf(peg);
+        bool removed = activeChain.Remove(peg);
+
+        if (removed && index >= 0)
+        {
+            leadProgress -= spacingBetweenPegs;
+        }
+
+        Debug.Log($"RemovePeg called. Success: {removed}. Chain count now: {activeChain.Count}");
     }
     public int GetChainCount()
     {
@@ -46,6 +55,53 @@ public class ChainManager : MonoBehaviour
         RegisterPeg(pegComponent);
         spawnedPegs++;
     }
+    public void RecalculateChainPositions()
+    {
+        for (int i = 0; i < activeChain.Count; i++)
+        {
+            if (activeChain[i] == null) continue;
+            float pegProgress = leadProgress - (i * spacingBetweenPegs);
+            if (pegProgress <= 0f) break;
+            activeChain[i].transform.position = splineContainer.EvaluatePosition(Mathf.Clamp01(pegProgress));
+        }
+    }
+
+    public void InsertPeg(Peg newPeg, Peg hitPeg)
+    {
+        for (int i = 0; i < activeChain.Count; i++)
+        {
+            if (activeChain[i] == null)
+            {
+                Debug.Log($"Null entry found at index {i} during InsertPeg!");
+                activeChain.RemoveAt(i);
+            }
+        }
+        //float closestDistance = float.MaxValue;
+        int insertIndex = activeChain.IndexOf(hitPeg);
+        //Debug.Log($"InsertPeg: inserting at index {insertIndex}, chain count before: {activeChain.Count}");
+
+
+        if (insertIndex == -1)
+        {
+            activeChain.Add(newPeg);
+            return;
+        }
+
+        if (insertIndex + 1 < activeChain.Count)
+        {
+            float distanceToNext = Vector3.Distance(activeChain[insertIndex + 1].transform.position, newPeg.transform.position);
+            float distanceToCurrent = Vector3.Distance(activeChain[insertIndex].transform.position, newPeg.transform.position);
+
+            if (distanceToNext < distanceToCurrent)
+            {
+                insertIndex++;
+            }
+        }
+
+        activeChain.Insert(insertIndex, newPeg);
+        leadProgress += spacingBetweenPegs;
+        RecalculateChainPositions();
+    }
 
     void Update()
     {
@@ -57,6 +113,13 @@ public class ChainManager : MonoBehaviour
 
         for (int i = 0; i < activeChain.Count; i++)
         {
+            if (activeChain[i] == null)
+            {
+                activeChain.RemoveAt(i);
+                i--;
+                continue;
+            }
+
             float pegProgress = leadProgress - (i * spacingBetweenPegs);
 
             if (pegProgress <= 0f)
@@ -81,7 +144,7 @@ public class ChainManager : MonoBehaviour
 
         if (spawnedPegs < totalPegsToSpawn)
         {
-            Debug.Log($"Spawner active. Timer: {spawnTimer}, Rate: {spawnRate}, Spawned: {spawnedPegs}");
+            //Debug.Log($"Spawner active. Timer: {spawnTimer}, Rate: {spawnRate}, Spawned: {spawnedPegs}");
             spawnTimer += Time.deltaTime;
             if (spawnTimer >= spawnRate)
             {

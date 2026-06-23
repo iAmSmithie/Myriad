@@ -23,11 +23,11 @@ public class BallController : MonoBehaviour
         }
         bounceCount++;
 
-        Debug.Log($"HIT: {hitPeg.gameObject.name} | BallColour: {ballColour} | PegColour: {hitPeg.Colour} | Bounce: {bounceCount} | DetonateMode: {isDetonateMode} | Match: {hitPeg.Colour == ballColour}");
+        //Debug.Log($"HIT: {hitPeg.gameObject.name} | BallColour: {ballColour} | PegColour: {hitPeg.Colour} | Bounce: {bounceCount} | DetonateMode: {isDetonateMode} | Match: {hitPeg.Colour == ballColour}");
 
         if (bounceCount >= 3)
         {
-            SlotIn();
+            SlotIn(hitPeg);
         }
         if (BallManager.Instance.isDetonateMode && hitPeg.Colour == ballColour)
         {
@@ -63,16 +63,17 @@ public class BallController : MonoBehaviour
                 peg.TakeHit();
             }
         }
+        ChainManager.Instance.RecalculateChainPositions();
         Destroy(gameObject);
     }
-    void SlotIn()
+    void SlotIn(Peg hitPeg)
     {
-        Debug.Log($"SlotIn called. Final bounce count: {bounceCount}");
+        //Debug.Log($"SlotIn called. Final bounce count: {bounceCount}");
         rb.bodyType = RigidbodyType2D.Static;
 
         Peg newPeg = gameObject.AddComponent<Peg>();
         newPeg.Colour = ballColour;
         Destroy(this);
-        ChainManager.Instance.RegisterPeg(newPeg);
+        ChainManager.Instance.InsertPeg(newPeg, hitPeg);
     }
 }

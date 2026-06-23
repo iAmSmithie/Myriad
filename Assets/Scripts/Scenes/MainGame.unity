@@ -1149,7 +1149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChainManager
   splineContainer: {fileID: 2038612318}
-  chainSpeed: 0.1
+  chainSpeed: 0.05
   spacingBetweenPegs: 0.0165
   spawnRate: 0.1
   totalPegsToSpawn: 8
