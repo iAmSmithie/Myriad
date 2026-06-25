@@ -101,6 +101,40 @@ public class ChainManager : MonoBehaviour
         activeChain.Insert(insertIndex, newPeg);
         leadProgress += spacingBetweenPegs;
         RecalculateChainPositions();
+        CheckForCluster(insertIndex);
+    }
+
+    public void CheckForCluster(int insertIndex)
+    {
+        PegColour targetColour = activeChain[insertIndex].Colour;
+        int leftIndex = insertIndex -1;
+
+        while (leftIndex >= 0 && activeChain[leftIndex].Colour == targetColour)
+        {
+            leftIndex--;
+        }
+        int rightIndex = insertIndex + 1;
+
+        while (rightIndex < activeChain.Count && activeChain[rightIndex].Colour == targetColour)
+        {
+            rightIndex++;
+        }
+        int clusterSize = rightIndex - leftIndex - 1;
+
+        if (clusterSize >= 3)
+        {
+            List<Peg> pegsToRemove = new List<Peg>();
+
+            for (int i = leftIndex + 1; i < rightIndex; i++)
+            {
+                pegsToRemove.Add(activeChain[i]);
+            }
+            foreach (Peg peg in pegsToRemove)
+            {
+                peg.TakeHit();
+            }
+        }
+        
     }
 
     void Update()

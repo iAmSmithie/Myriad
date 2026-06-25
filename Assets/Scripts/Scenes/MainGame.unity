@@ -144,7 +144,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129516578}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -252,7 +252,7 @@ Transform:
   m_GameObject: {fileID: 129516578}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 9.5, y: -0.14, z: 0}
+  m_LocalPosition: {x: 8.87, y: -0.14, z: 0}
   m_LocalScale: {x: 10, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -283,7 +283,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 230653422}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -392,7 +392,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 5.28, z: 0}
-  m_LocalScale: {x: 20, y: 1, z: 1}
+  m_LocalScale: {x: 18, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -422,7 +422,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 274115444}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -531,7 +531,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -5.28, z: 0}
-  m_LocalScale: {x: 20, y: 1, z: 1}
+  m_LocalScale: {x: 18, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -772,7 +772,7 @@ Transform:
   m_GameObject: {fileID: 1218482724}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.25, y: 0, z: 0}
+  m_LocalPosition: {x: 11.79, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -893,7 +893,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875472447}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -1001,7 +1001,7 @@ Transform:
   m_GameObject: {fileID: 1875472447}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -9.5, y: -0.14, z: 0}
+  m_LocalPosition: {x: -8.74, y: -0.14, z: 0}
   m_LocalScale: {x: 10, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1038,7 +1038,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Launcher
   ballPrefab: {fileID: 4493731057912497203, guid: 561e8dc1b552f834389599a0f1c5585e, type: 3}
-  launchForce: 30
+  launchForce: 40
   fireRate: 5
 --- !u!212 &1983780321
 SpriteRenderer:
@@ -1149,7 +1149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChainManager
   splineContainer: {fileID: 2038612318}
-  chainSpeed: 0.05
+  chainSpeed: 0.04
   spacingBetweenPegs: 0.0165
   spawnRate: 0.1
   totalPegsToSpawn: 8
@@ -1235,43 +1235,43 @@ MonoBehaviour:
           z: 0
           w: 1
     - Position:
-        x: 12.53
+        x: 14
         y: 0
         z: 3
       TangentIn:
         x: -0
         y: -0
-        z: -2.8062031
+        z: -2.9951487
       TangentOut:
         x: 0
         y: 0
-        z: 1.9510698
+        z: 1.9821103
       Rotation:
         value:
-          x: -0.28318268
-          y: 0.4422281
-          z: 0.14560145
-          w: 0.8384762
+          x: -0.3819518
+          y: 0.3685561
+          z: -0.0541441
+          w: 0.8457823
     - Position:
-        x: 12.53
+        x: 14
         y: 5.99
         z: 6
       TangentIn:
         x: -0
         y: -0
-        z: -1.9282186
+        z: -1.9676841
       TangentOut:
         x: 0
         y: 0
-        z: 2.6740553
+        z: 2.9059381
       Rotation:
         value:
-          x: -0.2813527
-          y: -0.43799078
-          z: -0.14650077
-          w: 0.8411553
+          x: -0.35490906
+          y: -0.3912269
+          z: -0.0029823352
+          w: 0.8491008
     - Position:
-        x: 0
+        x: -0.3
         y: 5.99
         z: 9
       TangentIn:
@@ -1317,7 +1317,7 @@ Transform:
   m_GameObject: {fileID: 2038612317}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.98, y: -3.01, z: 0}
+  m_LocalPosition: {x: -8.22, y: -3.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

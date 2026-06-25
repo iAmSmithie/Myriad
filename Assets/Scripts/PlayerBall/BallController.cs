@@ -7,6 +7,7 @@ public class BallController : MonoBehaviour
     public float aoeRadiusSmall;
     public float aoeRadiusLarge;
     public bool isDetonateMode = true;
+    private bool hasSlottedIn = false;
     private Rigidbody2D rb;
     void Start()
     {
@@ -15,6 +16,10 @@ public class BallController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (hasSlottedIn)
+        {
+            return;
+        }
         Peg hitPeg = collision.gameObject.GetComponent<Peg>();
 
         if (hitPeg == null)
@@ -24,10 +29,17 @@ public class BallController : MonoBehaviour
         bounceCount++;
 
         //Debug.Log($"HIT: {hitPeg.gameObject.name} | BallColour: {ballColour} | PegColour: {hitPeg.Colour} | Bounce: {bounceCount} | DetonateMode: {isDetonateMode} | Match: {hitPeg.Colour == ballColour}");
+        if (!BallManager.Instance.isDetonateMode)
+        {
+            SlotIn(hitPeg);
+            return;
+        }
+
 
         if (bounceCount >= 3)
         {
             SlotIn(hitPeg);
+            return;
         }
         if (BallManager.Instance.isDetonateMode && hitPeg.Colour == ballColour)
         {
@@ -68,6 +80,11 @@ public class BallController : MonoBehaviour
     }
     void SlotIn(Peg hitPeg)
     {
+        if (hasSlottedIn)
+        {
+            return;
+        }
+        hasSlottedIn = true;
         //Debug.Log($"SlotIn called. Final bounce count: {bounceCount}");
         rb.bodyType = RigidbodyType2D.Static;
 

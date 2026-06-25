@@ -13,6 +13,12 @@ public class Launcher : MonoBehaviour
     }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            BallManager.Instance.ToggleFireMode();
+            Debug.Log($"Fire mode toggled. Detonate mode: {BallManager.Instance.isDetonateMode}");
+        }
+
         Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         float angle = Mathf.Atan2(mouseWorldPos.y - transform.position.y, mouseWorldPos.x - transform.position.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);

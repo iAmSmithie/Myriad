@@ -23,8 +23,11 @@ public class BallManager : MonoBehaviour
     public PegColour GetNextBallColour()
     {
         PegColour nextColour = ballQueue.Dequeue();
-        //Debug.Log($"Next ball colour: {nextColour}");
         ballQueue.Enqueue(GetRandomColour());
+
+        PegColour[] preview = ballQueue.ToArray();
+        Debug.Log($"NEXT: {preview[0]} | THEN: {preview[1]}");
+
         return nextColour;
     }
     public void ToggleFireMode()
