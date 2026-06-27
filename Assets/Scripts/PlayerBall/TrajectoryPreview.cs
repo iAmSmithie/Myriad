@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class TrajectoryPreview : MonoBehaviour
 {
-    LineRenderer lineRenderer;
-    float fixedLength = 10f;
-    float detectionLength = 10f;
+    private LineRenderer lineRenderer;
+    public float fixedLength = 10f;
+    public float detectionLength = 10f;
+    public LayerMask ignoreLayer;
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -13,7 +14,7 @@ public class TrajectoryPreview : MonoBehaviour
     void Update()
     {
         Vector3 startPoint = transform.position;
-        Vector3 aimDirection = transform.up;
+        Vector3 aimDirection = transform.right;
         if (Input.GetMouseButton(1))
         {
            lineRenderer.enabled = true; 
@@ -32,7 +33,7 @@ public class TrajectoryPreview : MonoBehaviour
         else
         {
             lineRenderer.positionCount = 3;
-            RaycastHit hit = Physics.Raycast(startPoint, aimDirection, out hit, detectionLength);
+            RaycastHit2D hit = Physics2D.Raycast(startPoint, aimDirection, detectionLength, ~ignoreLayer);
 
             if (hit.collider != null)
             {
@@ -50,7 +51,6 @@ public class TrajectoryPreview : MonoBehaviour
                 Vector3 endPoint = startPoint + aimDirection * fixedLength;
                 lineRenderer.SetPosition(0, startPoint);
                 lineRenderer.SetPosition(1, endPoint);
-                lineRenderer.SetPosition(2, endPoint);
             }
         }
     }

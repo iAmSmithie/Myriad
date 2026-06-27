@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 468609032326294105}
   - component: {fileID: 6021833891852665916}
   - component: {fileID: 8939345249146131320}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerBallPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
