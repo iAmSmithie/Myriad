@@ -1,4 +1,7 @@
 using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.UI;
+using TMPro;
 
 public class Launcher : MonoBehaviour
 {
@@ -7,9 +10,12 @@ public class Launcher : MonoBehaviour
     public float fireRate;
     private float nextFireTime;
     private Camera mainCamera;
+    private SpriteRenderer spriteRenderer;
     void Start()
     {
         mainCamera = Camera.main;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.color = ColourUtility.GetColour(BallManager.Instance.PeekNextBallColour());
     }
     void Update()
     {
@@ -34,9 +40,11 @@ public class Launcher : MonoBehaviour
         GameObject ball = Instantiate(ballPrefab, transform.position, transform.rotation);
         PegColour nextColour = BallManager.Instance.GetNextBallColour();
         BallController ballController = ball.GetComponent<BallController>();
-        ballController.SetColour(nextColour);
+        ballController.SetColour(nextColour);        
         Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
         Vector2 direction = (mainCamera.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
         rb.AddForce(direction * launchForce, ForceMode2D.Impulse);
+        
+        spriteRenderer.color = ColourUtility.GetColour(BallManager.Instance.PeekNextBallColour());
     }
 }

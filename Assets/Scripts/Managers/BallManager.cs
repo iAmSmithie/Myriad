@@ -39,10 +39,8 @@ public class BallManager : MonoBehaviour
         Array colours = Enum.GetValues(typeof(PegColour));
         return (PegColour)colours.GetValue(UnityEngine.Random.Range(0, colours.Length));
     }
-
-    // Update is called once per frame
-    void Update()
+    public PegColour PeekNextBallColour()
     {
-        
+        return ballQueue.Peek();
     }
 }

@@ -852,7 +852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallManager
   queueSize: 5
-  isDetonateMode: 1
+  isDetonateMode: 0
 --- !u!4 &1787134721
 Transform:
   m_ObjectHideFlags: 0
@@ -1040,7 +1040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Launcher
   ballPrefab: {fileID: 4493731057912497203, guid: 561e8dc1b552f834389599a0f1c5585e, type: 3}
-  launchForce: 40
+  launchForce: 30
   fireRate: 5
 --- !u!212 &1983780321
 SpriteRenderer:
