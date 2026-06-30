@@ -11,6 +11,12 @@ public class GameManager : MonoBehaviour
 
     public void OnPegReachedExit(Peg peg)
     {
+        HealthManager.Instance.TakeDamage(peg.damageValue);
         //Debug.Log($"Peg of colour {peg.Colour} reached the exit!");
+    }
+    
+    public void OnLevelWon()
+    {
+        Debug.Log("Level Won!");
     }
 }

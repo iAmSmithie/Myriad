@@ -5,6 +5,7 @@ using UnityEngine.Splines;
 public class ChainManager : MonoBehaviour
 {
     public static ChainManager Instance { get; private set; }
+    private bool levelComplete = false;
     private List<Peg> activeChain = new List<Peg>();
     public SplineContainer splineContainer;
     public float chainSpeed = 0.1f;
@@ -139,6 +140,7 @@ public class ChainManager : MonoBehaviour
 
     void Update()
     {
+        if (levelComplete) return;
         //Debug.Log($"Update running. spawnedPegs: {spawnedPegs}, totalPegsToSpawn: {totalPegsToSpawn}");
         if (activeChain.Count > 0)
         {
@@ -185,6 +187,12 @@ public class ChainManager : MonoBehaviour
                 SpawnNextPeg();
                 spawnTimer = 0f;
             }
+        }
+
+        if (spawnedPegs >= totalPegsToSpawn && activeChain.Count == 0)
+        {
+            levelComplete = true;
+            GameManager.Instance.OnLevelWon();
         }
     }
 }

@@ -5,6 +5,8 @@ public class Peg : MonoBehaviour
 {
     public PegColour Colour;
     private SpriteRenderer spriteRenderer;
+    public int damageValue;
+    public int pointValue = 100;
 
     void Start()
     {
@@ -40,7 +42,7 @@ public class Peg : MonoBehaviour
     public void TakeHit()
     {
         ChainManager.Instance.RemovePeg(this);
-        //ScoreGoesHere
+        ScoreManager.Instance.AddScore(pointValue);
         Destroy(gameObject);
     }
 

@@ -25,8 +25,7 @@ public class BallManager : MonoBehaviour
         PegColour nextColour = ballQueue.Dequeue();
         ballQueue.Enqueue(GetRandomColour());
 
-        PegColour[] preview = ballQueue.ToArray();
-        Debug.Log($"NEXT: {preview[0]} | THEN: {preview[1]}");
+        //PegColour[] preview = ballQueue.ToArray();
 
         return nextColour;
     }
