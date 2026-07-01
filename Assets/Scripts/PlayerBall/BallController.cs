@@ -6,7 +6,7 @@ public class BallController : MonoBehaviour
     public int bounceCount = 0;
     public float aoeRadiusSmall;
     public float aoeRadiusLarge;
-    public bool isDetonateMode = true;
+    //public bool isDetonateMode = true;
     private bool hasSlottedIn = false;
     private Rigidbody2D rb;
     void Start()
@@ -67,10 +67,11 @@ public class BallController : MonoBehaviour
         //Debug.Log("Detonate() called!");
         float aoeRadius = (bounceCount == 1) ? aoeRadiusSmall : aoeRadiusLarge;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, aoeRadius);
+        Debug.Log($"Detonate fired. Radius: {aoeRadius}, Colliders found: {colliders.Length}");
         foreach (Collider2D collider in colliders)
         {
             Peg peg = collider.GetComponent<Peg>();
-            if (peg != null && peg.Colour == ballColour)
+            if (peg != null)
             {
                 peg.TakeHit();
             }
