@@ -6,6 +6,7 @@ public class BallController : MonoBehaviour
     public int bounceCount = 0;
     public float aoeRadiusSmall;
     public float aoeRadiusLarge;
+    public float aoeRadius;
     //public bool isDetonateMode = true;
     private bool hasSlottedIn = false;
     private Rigidbody2D rb;
@@ -27,6 +28,7 @@ public class BallController : MonoBehaviour
             return;
         }
         bounceCount++;
+        aoeRadius = (bounceCount == 1) ? aoeRadiusSmall : aoeRadiusLarge;
 
         //Debug.Log($"HIT: {hitPeg.gameObject.name} | BallColour: {ballColour} | PegColour: {hitPeg.Colour} | Bounce: {bounceCount} | DetonateMode: {isDetonateMode} | Match: {hitPeg.Colour == ballColour}");
         if (!BallManager.Instance.isDetonateMode)
@@ -35,17 +37,21 @@ public class BallController : MonoBehaviour
             return;
         }
 
-
         if (bounceCount >= 3)
         {
             SlotIn(hitPeg);
             return;
         }
-        if (BallManager.Instance.isDetonateMode && hitPeg.Colour == ballColour)
+        if (BallManager.Instance.isDetonateMode && hitPeg.Colour == ballColour && CountMatchingPegsInAOE(aoeRadius) + 1 >= 3)
         {
-            Detonate();
+            Detonate(bounceCount == 2);
         }
 
+    }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, aoeRadius);
     }
 
     public void SetColour(PegColour colour)
@@ -62,16 +68,29 @@ public class BallController : MonoBehaviour
             case PegColour.Orange: sr.color = Color.orange; break;
         }
     }
-    void Detonate()
+    public int CountMatchingPegsInAOE(float radius)
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius);
+        int count = 0;
+        foreach (Collider2D collider in colliders)
+        {
+            Peg peg = collider.GetComponent<Peg>();
+            if (peg != null && peg.Colour == ballColour)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+    void Detonate(bool destroyAllColours)
     {
         //Debug.Log("Detonate() called!");
-        float aoeRadius = (bounceCount == 1) ? aoeRadiusSmall : aoeRadiusLarge;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, aoeRadius);
         Debug.Log($"Detonate fired. Radius: {aoeRadius}, Colliders found: {colliders.Length}");
         foreach (Collider2D collider in colliders)
         {
             Peg peg = collider.GetComponent<Peg>();
-            if (peg != null)
+            if (peg != null && (destroyAllColours || peg.Colour == ballColour))
             {
                 peg.TakeHit();
             }
