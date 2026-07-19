@@ -21,6 +21,11 @@ public class HealthManager : MonoBehaviour
             OnGameOver();
         }
     }
+    public void Heal(int amount)
+    {
+        currentHP += amount;
+        Debug.Log ($"Healed for {amount}. Health = {currentHP}");
+    }
 
     void OnGameOver()
     {

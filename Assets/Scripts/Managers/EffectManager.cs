@@ -19,6 +19,20 @@ public class EffectManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        for (int i = activeEffects.Count - 1; i >= 0; i--)
+        {
+            ActiveEffect effect = activeEffects[i];
+            effect.remainingDuration -= Time.deltaTime;
+            if (effect.remainingDuration <= 0)
+            {
+                Debug.Log($"Effect expired: {effect.effectType}");
+                activeEffects.RemoveAt(i);
+            }
+        }
+    }
+
     public void ApplyEffect(PegEffectData effectData, float durationMultiplier)
     {
         ActiveEffect existing = activeEffects.Find(e => e.effectType == effectData.effectType);
@@ -38,6 +52,11 @@ public class EffectManager : MonoBehaviour
             };
             activeEffects.Add(newEffect);
             Debug.Log($"New effect applied: {newEffect.effectType} | Magnitude: {newEffect.magnitude} | Duration: {newEffect.remainingDuration}");
+        }
+
+        if (effectData.effectType == PegEffectType.Heal)
+        {
+            HealthManager.Instance.Heal((int)effectData.magnitude);
         }
     }
 
