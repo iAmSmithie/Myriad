@@ -39,8 +39,15 @@ public class Peg : MonoBehaviour
         }
     }
 
-    public void TakeHit()
+    public void TakeHit(bool wasDetonated = false)
     {
+        EffectPeg effectPeg = GetComponent<EffectPeg>();
+        if (effectPeg != null && effectPeg.effectData != null)
+        {
+            float durationMultiplier = wasDetonated ? 2f : 1f; // Double the duration if detonated
+            EffectManager.Instance.ApplyEffect(effectPeg.effectData, durationMultiplier);
+            //Debug.Log($"Effect triggered: {effectPeg.effectData.effectType} | Duration multiplier: {durationMultiplier}");
+        }
         ChainManager.Instance.RemovePeg(this);
         ScoreManager.Instance.AddScore(pointValue);
         Destroy(gameObject);

@@ -92,7 +92,7 @@ public class BallController : MonoBehaviour
             Peg peg = collider.GetComponent<Peg>();
             if (peg != null && (destroyAllColours || peg.Colour == ballColour))
             {
-                peg.TakeHit();
+                peg.TakeHit(true);
             }
         }
         ChainManager.Instance.RecalculateChainPositions();

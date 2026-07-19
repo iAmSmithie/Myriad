@@ -37,7 +37,7 @@ public class ChainManager : MonoBehaviour
             leadProgress -= spacingBetweenPegs;
         }
 
-        Debug.Log($"RemovePeg called. Success: {removed}. Chain count now: {activeChain.Count}");
+        //Debug.Log($"RemovePeg called. Success: {removed}. Chain count now: {activeChain.Count}");
     }
     public int GetChainCount()
     {
