@@ -170,7 +170,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5436c52255e7e1a419b9750e249e6eb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallController
+  pegPrefab: {fileID: 4717790291729569187, guid: 9cb12f37fd4b25141a80b4bc106df86b, type: 3}
   ballColour: 0
   bounceCount: 0
   aoeRadiusSmall: 1
   aoeRadiusLarge: 2
+  aoeRadius: 0

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
+    public Peg pegPrefab;
     public PegColour ballColour;
     public int bounceCount = 0;
     public float aoeRadiusSmall;
@@ -110,6 +111,7 @@ public class BallController : MonoBehaviour
 
         Peg newPeg = gameObject.AddComponent<Peg>();
         newPeg.Colour = ballColour;
+        newPeg.damageValue = pegPrefab.damageValue;
         Destroy(this);
         ChainManager.Instance.InsertPeg(newPeg, hitPeg);
     }
